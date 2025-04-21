@@ -123,27 +123,32 @@ print(f'Test RMSE: {test_rmse}')
 
 
 # Make plots
-fig, ax = plt.subplots(2, figsize=(15, 5))
+fig, ax0 = plt.subplots(figsize=(15, 5))
 
 ## Close price train vs test
-ax[0].plot(np.concatenate((y_train_true, y_test_true)), label='True')
-ax[0].plot(y_train_pred, label='Train Prediction')
+ax0.plot(np.concatenate((y_train_true, y_test_true)), label='True')
+ax0.plot(y_train_pred, label='Train Prediction')
 
 y_test_padding = np.empty(len(y_train_pred))
 y_test_padding[: ] = np.nan
 
-ax[0].plot(np.concatenate((y_test_padding, y_test_pred)), label='Test Prediction')
+ax0.plot(np.concatenate((y_test_padding, y_test_pred)), label='Test Prediction')
 
-ax[0].set_title('Train - Test Dataset Performance')
-ax[0].legend()
+ax0.set_title('Train - Test Dataset Performance')
+ax0.legend()
+
+plt.savefig('./results/train_test_performance.png')
 
 ## Loss function vs epochs 
-ax[1].plot(hist.history['loss'], label='Training Loss')
-ax[1].plot(hist.history['val_loss'], label='Validation Loss')
+fig, ax1 = plt.subplots(figsize=(15, 5))
+ax1.plot(hist.history['loss'], label='Training Loss')
+ax1.plot(hist.history['val_loss'], label='Validation Loss')
 
-ax[1].set_title('Training vs Validation Loss')
+ax1.set_title('Training vs Validation Loss')
 
-ax[1].set_xticks([i for i in range(len(hist.history['loss']))])
-ax[1].legend()
+ax1.set_xticks([i for i in range(len(hist.history['loss']))])
+ax1.legend()
+
+plt.savefig('./results/loss_curves.png')
 
 plt.show()
